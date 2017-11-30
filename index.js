@@ -1,10 +1,13 @@
 'use strict';
 
+// const greyscale = require('.lib/greyscale');
+// const invert = require('.lib/invert');
+// const chaos = require('.lib/chaos');
 
-const bitmap = require('.lib/bitmap');
+const bitmap = require('/lib/bitmap.js');
 const fs = require('fs');
 
-fs.readFile(`${__dirname}/assets/house.bmp`, (error, data) => {
+fs.readFile(`${__dirname}/__test__/assets/house.bmp`, (error, data) => {
   if(error){
     console.error(error);
     return;
