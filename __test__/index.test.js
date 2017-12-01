@@ -1,24 +1,34 @@
 'use strict';
 
-const reader = require('../lib/reader');
-const reader = require('../lib/reader');
+// const bitmap = require('./lib/bitmap.js');
+const bitmapper = require('../index');
 
 describe('bitmap.js', () =>{
-
-})
-
-
-
-test('file contents should be returned in order based on input array', done => {
-  let filePaths = [
-    `${__dirname}/../assets/mario.txt`,
-    `${__dirname}/../assets/peach.txt`,
-    `${__dirname}/../assets/luigi.txt`,
-  ];
-  reader.readFiles(filePaths, (error,data) => {
-    expect(data[0]).toEqual('mario');
-    expect(data[1]).toEqual('peach');
-    expect(data[2]).toEqual('luigi');
-    done();
+  test('should return array of 4 parsedBitmap objects', done => {
+    let filePaths = [
+      `${__dirname}/assets/bitmap.bmp`,
+      `${__dirname}/assets/finger-print.bmp`,
+      `${__dirname}/assets/house.bmp`,
+      `${__dirname}/assets/non-palette-bitmap.bmp`,
+    ];
+    bitmapper.parser(filePaths, (error,data) => {
+      expect(typeof data[0]).toBe('object');
+      expect(typeof data[1]).toBe('object');
+      expect(typeof data[2]).toBe('object');
+      expect(typeof data[3]).toBe('object');
+      done();
+    });
+  });
+  test('should return error callback if a filepath is bad', done => {
+    let filePaths = [
+      `${__dirname}/assets/bitmaaaaaaaap.bmp`,
+      `${__dirname}/assets/finger-print.bmp`,
+      `${__dirname}/assets/house.bmp`,
+      `${__dirname}/assets/non-palette-bitmap.bmp`,
+    ];
+    bitmapper.parser(filePaths, (error,data) => {
+      expect(error).not.toBeNull();
+      done();
+    });
   });
 });

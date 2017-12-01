@@ -4,19 +4,36 @@
 // const invert = require('.lib/invert');
 // const chaos = require('.lib/chaos');
 
-const bitmap = require('/lib/bitmap.js');
+const bitmap = require('./lib/bitmap.js');
 const fs = require('fs');
 
-fs.readFile(`${__dirname}/__test__/assets/house.bmp`, (error, data) => {
-  if(error){
-    console.error(error);
-    return;
+const bitmapper = module.exports = {};
+
+let paths = [`${__dirname}/__test__/assets/house.bmp`];
+
+bitmapper.parser = (paths, callback) =>{
+  //TODO: error check if array already has lenght ===0
+  let results = [];
+  function parseFilesRecursively(){
+    if(paths.length === 0)
+      callback(null, results);
+    else
+      fs.readFile(paths.shift(), (error,data) => {
+        //inside this callback returns a file or error
+        if(error){
+          callback(error);
+          return;
+        }
+
+        results.push(bitmap.parseBitmap(data));
+        parseFilesRecursively();
+      });
   }
+  // console.log('first iteration');
+  parseFilesRecursively();
+};
 
-  let parsedBitmap = bitmap.parseBitmap(data);
-  console.log(parsedBitmap);
-});
-
+bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
 // let stringBuffer = Buffer('The Hound');
 
 // console.log(`Buffer as a string: ${stringBuffer.toString()}`);
