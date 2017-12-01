@@ -4,18 +4,44 @@
 // const invert = require('.lib/invert');
 // const chaos = require('.lib/chaos');
 
-const bitmap = require('/lib/bitmap.js');
+const bitmap = require('./lib/bitmap.js');
 const fs = require('fs');
 
-fs.readFile(`${__dirname}/__test__/assets/house.bmp`, (error, data) => {
-  if(error){
-    console.error(error);
-    return;
-  }
+const bitmapper = module.exports = {};
 
-  let parsedBitmap = bitmap.parseBitmap(data);
-  console.log(parsedBitmap);
-});
+// let paths = [`${__dirname}/__test__/assets/house.bmp`];
+
+bitmapper.parser = (paths, callback) =>{
+  //TODO: error check if array already has lenght ===0
+  let results = [];
+  function parseFilesRecursively(){
+    if(paths.length === 0)
+      callback(null, results);
+    else
+      fs.readFile(paths.shift(), (error,data) => {
+        //inside this callback returns a file or error
+        if(error){
+          callback(error);
+          return;
+        }
+
+        results.push(bitmap.parseBitmap(data));
+        parseFilesRecursively();
+      });
+  }
+  // console.log('first iteration');
+  parseFilesRecursively();
+};
+
+// bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
+
+// bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
+// constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
+// constructor takes in the transformer, which takes in parsed object created from the filepaths- it also takes in the output paths
+//it constructs new files out of them through the callback;
+
+// }
+
 
 // let stringBuffer = Buffer('The Hound');
 

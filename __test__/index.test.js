@@ -1,24 +1,87 @@
 'use strict';
 
-const reader = require('../lib/reader');
-const reader = require('../lib/reader');
-
-describe('bitmap.js', () =>{
-
-})
+// const bitmap = require('./lib/bitmap.js');
+const bitmapper = require('../index');
+const chaos = require('../lib/chaos');
 
 
 
-test('file contents should be returned in order based on input array', done => {
-  let filePaths = [
-    `${__dirname}/../assets/mario.txt`,
-    `${__dirname}/../assets/peach.txt`,
-    `${__dirname}/../assets/luigi.txt`,
-  ];
-  reader.readFiles(filePaths, (error,data) => {
-    expect(data[0]).toEqual('mario');
-    expect(data[1]).toEqual('peach');
-    expect(data[2]).toEqual('luigi');
-    done();
+describe('index.js', () =>{
+  describe('bitmapper.parser', () => {
+    test('should return array of 4 parsedBitmap objects', done => {
+      let filePaths = [
+        `${__dirname}/assets/bitmap.bmp`,
+        `${__dirname}/assets/finger-print.bmp`,
+        `${__dirname}/assets/house.bmp`,
+        `${__dirname}/assets/non-palette-bitmap.bmp`,
+      ];
+      bitmapper.parser(filePaths, (error,data) => {
+        expect(typeof data[0]).toBe('object');
+        expect(typeof data[1]).toBe('object');
+        expect(typeof data[2]).toBe('object');
+        expect(typeof data[3]).toBe('object');
+        done();
+      });
+    });
+    test('should return error callback if a filepath is bad', done => {
+      let filePaths = [
+        `${__dirname}/assets/bitmaaaaaaaap.bmp`,
+        `${__dirname}/assets/finger-print.bmp`,
+        `${__dirname}/assets/house.bmp`,
+        `${__dirname}/assets/non-palette-bitmap.bmp`,
+      ];
+      bitmapper.parser(filePaths, (error,data) => {
+        expect(error).not.toBeNull();
+        done();
+      });
+    });
   });
+
+  describe('chaos.chaos.js', () => {
+    test('modify colors to be different', done => {
+      let filePaths = [
+        `${__dirname}/assets/bitmap.bmp`,
+        `${__dirname}/assets/finger-print.bmp`,
+        `${__dirname}/assets/house.bmp`,
+        `${__dirname}/assets/non-palette-bitmap.bmp`,
+      ];
+      let objectArray = bitmapper.parser(filePaths, (error,data) => {
+        done();});
+
+      chaos.chaos(objectArray, (error, data) => {
+        expect(error).toBeNull();
+        expect(data[0].color).not.toBe(objectArray[0].color); //making sure color changed;
+        expect(data[1].color).not.toBe(objectArray[1].color); //making sure color changed;
+        expect(data[2].color).not.toBe(objectArray[2].color); //making sure color changed;
+        expect(data[3].color).not.toBe(objectArray[3].color); //making sure color changed;
+      });
+    });
+
+  });
+
+  // describe('bitmapper.createNewFiles', () => {
+  //   test('should output four new files in dump folder', done => {
+  //     let inputFilePaths = [
+  //       `${__dirname}/assets/bitmap.bmp`,
+  //       `${__dirname}/assets/finger-print.bmp`,
+  //       `${__dirname}/assets/house.bmp`,
+  //       `${__dirname}/assets/non-palette-bitmap.bmp`,
+  //     ];
+  //     let outputFilePaths = [
+  //       `${__dirname}/dump/bitmap2.bmp`,
+  //       `${__dirname}/dump/finger-print2.bmp`,
+  //       `${__dirname}/dump/house2.bmp`,
+  //       `${__dirname}/dump/non-palette-bitmap2.bmp`,
+  //     ];
+  //     let transformer = 'undefined function'; //put name of function here
+  //     bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, (error,data) => {
+  //       expect(typeof data[0]).toBe('object');
+  //       expect(typeof data[1]).toBe('object');
+  //       expect(typeof data[2]).toBe('object');
+  //       expect(typeof data[3]).toBe('object');
+  //       done();
+  //     });
+  //   });
+  //
+  // });
 });
