@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const bitmapper = module.exports = {};
 
-// let paths = [`${__dirname}/__test__/assets/house.bmp`];
+let paths = [`${__dirname}/__test__/assets/house.bmp`];
 
 bitmapper.parser = (paths, callback) =>{
   //TODO: error check if array already has lenght ===0
@@ -33,7 +33,7 @@ bitmapper.parser = (paths, callback) =>{
   parseFilesRecursively();
 };
 
-// bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
+bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
 
 // bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
 // constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
