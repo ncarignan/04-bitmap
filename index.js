@@ -2,29 +2,26 @@
 
 // const greyscale = require('.lib/greyscale');
 // const invert = require('.lib/invert');
-// const chaos = require('.lib/chaos');
+
+const chaos = require('./lib/chaos.js');
 
 const bitmap = require('./lib/bitmap.js');
-const chaos = require('./lib/chaos.js');
 const fs = require('fs');
 
 const bitmapper = module.exports = {};
 
-let paths = [
-  `${__dirname}/__test__/assets/bitmap.bmp`,
-  // `${__dirname}/__test__/assets/finger-print.bmp`,
-  // `${__dirname}/__test__/assets/house.bmp`,
-  // `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
-];
+let paths = [`${__dirname}/__test__/assets/bitmap.bmp`];
 
 bitmapper.parser = (paths, callback) =>{
   //TODO: error check if array already has lenght ===0
   let results = [];
+
   function parseFilesRecursively(){
     if(paths.length === 0){
-      // console.log('paths.length results: ', results);
-      callback(null, results);
-    }else{
+      // callback(null, results);
+      console.log('results are', results);
+      chaos.chaos(results, callback);
+    }else
       fs.readFile(paths.shift(), (error,data) => {
         //inside this callback returns a file or error
         if(error){
@@ -35,16 +32,10 @@ bitmapper.parser = (paths, callback) =>{
         results.push(bitmap.parseBitmap(data));
         parseFilesRecursively();
       });
-    }
-    // console.log('Pre-write results: ', results,'=================================================' );
   }
   // console.log('first iteration');
   parseFilesRecursively();
-  chaos.chaos(results, callback);
-
-
-
-  // console.log('parsed results: ', results);
+  console.log('chaos called');
 };
 
 bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
