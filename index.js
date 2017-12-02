@@ -19,15 +19,22 @@ let paths = [
   `${__dirname}/__test__/assets/house.bmp`,
   `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
 ];
+let outputPaths = [
+  `${__dirname}/__test__/dump/bitmap-test.bmp`,
+  `${__dirname}/__test__/dump/finger-print-test.bmp`,
+  `${__dirname}/__test__/dump/house-test.bmp`,
+  `${__dirname}/__test__/dump/non-palette-bitmap-test.bmp`,
+];
+let transformName = 'chaos';
 
-bitmapper.writer = (paths, callback) =>{
+bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   //TODO: error check if array already has lenght ===0
   let results = [];
 
   function parseFilesRecursively(){
     if(paths.length === 0){
       // greyscale.greyscale(results, callback);
-      chaos.chaos(results, callback);
+      eval(`${transformName}.${transformName}(results, callback)`);
       // invert.invert(results, callback);
       // fs.writeFile(newPaths[0], chaos.chaos(results, callback)[0].buffer);
       // fs.writeFile(newPaths[1], chaos.chaos(results, callback)[1].buffer);
@@ -51,7 +58,7 @@ bitmapper.writer = (paths, callback) =>{
   console.log('chaos called');
 };
 
-bitmapper.writer(paths, (error, results) => {console.log(results); console.log(error);});
+bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
 
 // bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
 // constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
