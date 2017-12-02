@@ -3,7 +3,7 @@
 // const greyscale = require('.lib/greyscale');
 // const invert = require('.lib/invert');
 
-const chaos = require('./lib/chaos.js');
+const greyscale = require('./lib/greyscale.js');
 
 const bitmap = require('./lib/bitmap.js');
 const fs = require('fs');
@@ -13,11 +13,17 @@ const bitmapper = module.exports = {};
 let paths = [
   `${__dirname}/__test__/assets/bitmap.bmp`,
   `${__dirname}/__test__/assets/finger-print.bmp`,
-  `${__dirname}/__test__/assets/hosue.bmp`,
+  `${__dirname}/__test__/assets/house.bmp`,
   `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
 ];
+// let newPaths = [
+//   `bitmap-test.bmp`,
+//   `finger-print-test.bmp`,
+//   `house-test.bmp`,
+//   `non-palette-bitmap-test.bmp`,
+// ];
 
-bitmapper.parser = (paths, callback) =>{
+bitmapper.writer = (paths, callback) =>{
   //TODO: error check if array already has lenght ===0
   let results = [];
 
@@ -25,7 +31,12 @@ bitmapper.parser = (paths, callback) =>{
     if(paths.length === 0){
       // callback(null, results);
       // console.log('results are', results);
-      fs.writeFile(`bitmaptest.bmp`, chaos.chaos(results, callback));
+      greyscale.greyscale(results, callback);
+      // fs.writeFile(newPaths[0], chaos.chaos(results, callback)[0].buffer);
+      // fs.writeFile(newPaths[1], chaos.chaos(results, callback)[1].buffer);
+      // fs.writeFile(newPaths[2], chaos.chaos(results, callback)[2].buffer);
+      // fs.writeFile(newPaths[3], chaos.chaos(results, callback)[3].buffer);
+
     }else
       fs.readFile(paths.shift(), (error,data) => {
         //inside this callback returns a file or error
@@ -43,7 +54,7 @@ bitmapper.parser = (paths, callback) =>{
   console.log('chaos called');
 };
 
-bitmapper.parser(paths, (error, results) => {console.log(results); console.log(error);});
+bitmapper.writer(paths, (error, results) => {console.log(results); console.log(error);});
 
 // bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
 // constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
