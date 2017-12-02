@@ -19,8 +19,8 @@ bitmapper.parser = (paths, callback) =>{
   function parseFilesRecursively(){
     if(paths.length === 0){
       // callback(null, results);
-      console.log('results are', results);
-      chaos.chaos(results, callback);
+      // console.log('results are', results);
+      fs.writeFile(`bitmaptest.bmp`, chaos.chaos(results, callback));
     }else
       fs.readFile(paths.shift(), (error,data) => {
         //inside this callback returns a file or error
