@@ -1,14 +1,12 @@
 'use strict';
 
-// const greyscale = require('.lib/greyscale');
-// const invert = require('.lib/invert');
-
 const greyscale = require('./lib/greyscale.js');
 const invert = require('./lib/invert.js');
 const chaos = require('./lib/chaos.js');
 
 
 const bitmap = require('./lib/bitmap.js');
+const invert = require('./lib/invert.js');
 const fs = require('fs');
 
 const bitmapper = module.exports = {};
@@ -33,13 +31,10 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
 
   function parseFilesRecursively(){
     if(paths.length === 0){
-      // greyscale.greyscale(results, callback);
+
       eval(`${transformName}.${transformName}(results, callback)`);
-      // invert.invert(results, callback);
-      // fs.writeFile(newPaths[0], chaos.chaos(results, callback)[0].buffer);
-      // fs.writeFile(newPaths[1], chaos.chaos(results, callback)[1].buffer);
-      // fs.writeFile(newPaths[2], chaos.chaos(results, callback)[2].buffer);
-      // fs.writeFile(newPaths[3], chaos.chaos(results, callback)[3].buffer);
+
+
 
     }else
       fs.readFile(paths.shift(), (error,data) => {
@@ -55,7 +50,7 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   }
   // console.log('first iteration');
   parseFilesRecursively();
-  console.log('chaos called');
+  console.log('invert called');
 };
 
 bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
