@@ -10,7 +10,12 @@ const fs = require('fs');
 
 const bitmapper = module.exports = {};
 
-let paths = [`${__dirname}/__test__/assets/bitmap.bmp`];
+let paths = [
+  `${__dirname}/__test__/assets/bitmap.bmp`,
+  `${__dirname}/__test__/assets/finger-print.bmp`,
+  `${__dirname}/__test__/assets/hosue.bmp`,
+  `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
+];
 
 bitmapper.parser = (paths, callback) =>{
   //TODO: error check if array already has lenght ===0
