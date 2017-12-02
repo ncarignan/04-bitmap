@@ -1,6 +1,9 @@
 'use strict';
 
 const greyscale = require('./lib/greyscale.js');
+const invert = require('./lib/invert.js');
+const chaos = require('./lib/chaos.js');
+
 
 const bitmap = require('./lib/bitmap.js');
 const invert = require('./lib/invert.js');
@@ -14,22 +17,24 @@ let paths = [
   `${__dirname}/__test__/assets/house.bmp`,
   `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
 ];
-// let newPaths = [
-//   `bitmap-test.bmp`,
-//   `finger-print-test.bmp`,
-//   `house-test.bmp`,
-//   `non-palette-bitmap-test.bmp`,
-// ];
+let outputPaths = [
+  `${__dirname}/__test__/dump/bitmap-test.bmp`,
+  `${__dirname}/__test__/dump/finger-print-test.bmp`,
+  `${__dirname}/__test__/dump/house-test.bmp`,
+  `${__dirname}/__test__/dump/non-palette-bitmap-test.bmp`,
+];
+let transformName = 'chaos';
 
-bitmapper.writer = (paths, callback) =>{
+bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   //TODO: error check if array already has lenght ===0
   let results = [];
 
   function parseFilesRecursively(){
     if(paths.length === 0){
-      // callback(null, results);
-      // console.log('results are', results);
-      invert.invert(results, callback);
+
+      eval(`${transformName}.${transformName}(results, callback)`);
+
+
 
     }else
       fs.readFile(paths.shift(), (error,data) => {
@@ -48,7 +53,7 @@ bitmapper.writer = (paths, callback) =>{
   console.log('invert called');
 };
 
-bitmapper.writer(paths, (error, results) => {console.log(results); console.log(error);});
+bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
 
 // bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
 // constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
