@@ -4,6 +4,9 @@
 // const invert = require('.lib/invert');
 
 const greyscale = require('./lib/greyscale.js');
+const invert = require('./lib/invert.js');
+const chaos = require('./lib/chaos.js');
+
 
 const bitmap = require('./lib/bitmap.js');
 const fs = require('fs');
@@ -16,12 +19,6 @@ let paths = [
   `${__dirname}/__test__/assets/house.bmp`,
   `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
 ];
-// let newPaths = [
-//   `bitmap-test.bmp`,
-//   `finger-print-test.bmp`,
-//   `house-test.bmp`,
-//   `non-palette-bitmap-test.bmp`,
-// ];
 
 bitmapper.writer = (paths, callback) =>{
   //TODO: error check if array already has lenght ===0
@@ -29,9 +26,9 @@ bitmapper.writer = (paths, callback) =>{
 
   function parseFilesRecursively(){
     if(paths.length === 0){
-      // callback(null, results);
-      // console.log('results are', results);
-      greyscale.greyscale(results, callback);
+      // greyscale.greyscale(results, callback);
+      chaos.chaos(results, callback);
+      // invert.invert(results, callback);
       // fs.writeFile(newPaths[0], chaos.chaos(results, callback)[0].buffer);
       // fs.writeFile(newPaths[1], chaos.chaos(results, callback)[1].buffer);
       // fs.writeFile(newPaths[2], chaos.chaos(results, callback)[2].buffer);
