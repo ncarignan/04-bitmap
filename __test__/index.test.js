@@ -30,7 +30,7 @@ describe('index.js', () =>{
         `${__dirname}/assets/house.bmp`,
         `${__dirname}/assets/non-palette-bitmap.bmp`,
       ];
-      bitmapper.parser(filePaths, (error,data) => {
+      bitmapper.parser(filePaths, (error, data) => {
         expect(error).not.toBeNull();
         done();
       });
@@ -45,9 +45,10 @@ describe('index.js', () =>{
         `${__dirname}/assets/house.bmp`,
         `${__dirname}/assets/non-palette-bitmap.bmp`,
       ];
-      let objectArray = bitmapper.parser(filePaths, (error,data) => {
+      let objectArray = bitmapper.parser(filePaths, (error, data) => {
         done();});
 
+      console.log('objectArray: ', objectArray);
       chaos.chaos(objectArray, (error, data) => {
         expect(error).toBeNull();
         expect(data[0].color).not.toBe(objectArray[0].color); //making sure color changed;
