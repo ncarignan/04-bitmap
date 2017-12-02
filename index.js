@@ -1,11 +1,9 @@
 'use strict';
 
-// const greyscale = require('.lib/greyscale');
-// const invert = require('.lib/invert');
-
 const greyscale = require('./lib/greyscale.js');
 
 const bitmap = require('./lib/bitmap.js');
+const invert = require('./lib/invert.js');
 const fs = require('fs');
 
 const bitmapper = module.exports = {};
@@ -31,11 +29,7 @@ bitmapper.writer = (paths, callback) =>{
     if(paths.length === 0){
       // callback(null, results);
       // console.log('results are', results);
-      greyscale.greyscale(results, callback);
-      // fs.writeFile(newPaths[0], chaos.chaos(results, callback)[0].buffer);
-      // fs.writeFile(newPaths[1], chaos.chaos(results, callback)[1].buffer);
-      // fs.writeFile(newPaths[2], chaos.chaos(results, callback)[2].buffer);
-      // fs.writeFile(newPaths[3], chaos.chaos(results, callback)[3].buffer);
+      invert.invert(results, callback);
 
     }else
       fs.readFile(paths.shift(), (error,data) => {
@@ -51,7 +45,7 @@ bitmapper.writer = (paths, callback) =>{
   }
   // console.log('first iteration');
   parseFilesRecursively();
-  console.log('chaos called');
+  console.log('invert called');
 };
 
 bitmapper.writer(paths, (error, results) => {console.log(results); console.log(error);});
