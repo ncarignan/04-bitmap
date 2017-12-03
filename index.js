@@ -10,33 +10,19 @@ const fs = require('fs');
 
 const bitmapper = module.exports = {};
 
-let paths = [
-  `${__dirname}/__test__/assets/bitmap.bmp`,
-  `${__dirname}/__test__/assets/finger-print.bmp`,
-  `${__dirname}/__test__/assets/house.bmp`,
-  `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
-];
-let outputPaths = [
-  `${__dirname}/__test__/dump/bitmap-test.bmp`,
-  `${__dirname}/__test__/dump/finger-print-test.bmp`,
-  `${__dirname}/__test__/dump/house-test.bmp`,
-  `${__dirname}/__test__/dump/non-palette-bitmap-test.bmp`,
-];
-let transformName = 'invert';
-
 bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   //TODO: error check if array already has lenght ===0
   let results = [];
 
   function parseFilesRecursively(){
-    if(paths.length === 0){
+    if(inputPaths.length === 0){
 
       eval(`${transformName}.${transformName}(results, callback)`);
 
 
 
     }else
-      fs.readFile(paths.shift(), (error,data) => {
+      fs.readFile(inputPaths.shift(), (error,data) => {
         //inside this callback returns a file or error
         if(error){
           callback(error);
@@ -52,8 +38,23 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   // console.log('invert called');
 };
 
-bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
-
+// //node test paths ==========================
+// let paths = [
+//   `${__dirname}/__test__/assets/bitmap.bmp`,
+//   `${__dirname}/__test__/assets/finger-print.bmp`,
+//   `${__dirname}/__test__/assets/house.bmp`,
+//   `${__dirname}/__test__/assets/non-palette-bitmap.bmp`,
+// ];
+// let outputPaths = [
+//   `${__dirname}/__test__/dump/bitmap-test.bmp`,
+//   `${__dirname}/__test__/dump/finger-print-test.bmp`,
+//   `${__dirname}/__test__/dump/house-test.bmp`,
+//   `${__dirname}/__test__/dump/non-palette-bitmap-test.bmp`,
+// ];
+// let transformName = 'invert';
+//
+// bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
+//================================================
 // bitmapper.createNewFiles(inputFilePaths, outputFilePaths, transformer, callback) => {
 // constructor(tansformer(parser(inputFilePaths)), outputFilePaths) => output new files
 // constructor takes in the transformer, which takes in parsed object created from the filepaths- it also takes in the output paths

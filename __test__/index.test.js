@@ -21,7 +21,7 @@ describe('index.js', () =>{
       bitmapper.writer(inputPaths, outputPaths, transformName, (error,data) => {
         expect(data[0].buffer).not.toBeNull();
         expect(data[1].buffer).not.toBeNull();
-        console.log(data);
+        console.log(data[2]);
         expect(data[2].buffer).not.toBeNull();
         // expect(data[1].buffer).not.toBeNull();
         // expect(data[2].buffer).not.toBeNull();
