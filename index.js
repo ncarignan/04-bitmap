@@ -6,7 +6,6 @@ const chaos = require('./lib/chaos.js');
 
 
 const bitmap = require('./lib/bitmap.js');
-const invert = require('./lib/invert.js');
 const fs = require('fs');
 
 const bitmapper = module.exports = {};
@@ -23,7 +22,7 @@ let outputPaths = [
   `${__dirname}/__test__/dump/house-test.bmp`,
   `${__dirname}/__test__/dump/non-palette-bitmap-test.bmp`,
 ];
-let transformName = 'chaos';
+let transformName = 'invert';
 
 bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   //TODO: error check if array already has lenght ===0
@@ -50,7 +49,7 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   }
   // console.log('first iteration');
   parseFilesRecursively();
-  console.log('invert called');
+  // console.log('invert called');
 };
 
 bitmapper.writer(paths, outputPaths, transformName,  (error, results) => {console.log(results); console.log(error);});
