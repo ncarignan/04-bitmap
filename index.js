@@ -27,6 +27,7 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   if(typeof callback !== 'function') {
     callback = (error, data) => {return;};
   }
+
   function parseFilesRecursively(){
     if(inputPaths.length === 0){
       eval(`${transformName}.${transformName}(results, outputPaths, callback)`);
@@ -40,7 +41,19 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
         parseFilesRecursively();
       });
   }
-  parseFilesRecursively();
+
+  if(typeof inputPaths !== 'object'){
+    callback('inputPaths must be an array of strings', inputPaths);
+    throw new TypeError('inputPaths must be an array of strings');
+  }else if(typeof outputPaths !== 'object'){
+    callback('outputPaths must be an array of strings', outputPaths);
+    throw new TypeError('outputPaths must be an array of strings');
+  }else if(typeof transformName !== 'string'){
+    callback('transformName must be a string', transformName);
+    throw new TypeError('transformName must be a string');
+  }else{
+    parseFilesRecursively();
+  }
 };
 
 bitmapper.writer(inputPaths, outputPaths, transformName);
