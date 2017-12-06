@@ -1,10 +1,7 @@
 'use strict';
 
-// const bitmap = require('./lib/bitmap.js');
 const bitmapper = require('../index');
 const chaos = require('../lib/chaos');
-
-
 
 describe('index.js', () =>{
   describe('bitmapper.writer', () => {
@@ -71,8 +68,6 @@ describe('index.js', () =>{
         expect(data[0].buffer).not.toBeNull();
         expect(data[1].buffer).not.toBeNull();
         expect(data[2].buffer).not.toBeNull();
-        // expect(data[1].buffer).not.toBeNull();
-        // expect(data[2].buffer).not.toBeNull();
         done();
       });
     });
@@ -157,20 +152,3 @@ describe('index.js', () =>{
 
   });
 });
-
-// if(typeof inputPaths !== 'object'){
-//   callback('inputPaths must be an array of strings', inputPaths);
-//   throw new TypeError('inputPaths must be an array of strings');
-// }
-// if(typeof outputPaths !== 'object'){
-//   callback('outputPaths must be an array of strings', outputPaths);
-//   throw new TypeError('outputPaths must be an array of strings');
-// }
-// if(typeof transformName !== 'string'){
-//   callback('transformName must be a string', transformName);
-//   throw new TypeError('transformName must be a string');
-// }
-// if(transformName !== 'invert' && transformName !== 'chaos' && transformName !== 'greyscale'){
-//   callback('transformName must be either invert, chaos, or greyscale', transformName);
-//   throw new TypeError('transformName must be either invert, chaos, or greyscale');
-// }
