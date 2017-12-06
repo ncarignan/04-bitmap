@@ -1,6 +1,22 @@
 In your README.md describe the exported values of each module you have defined. Every function description should include it's arity (expected number of paramiters), the expected data for each parameter (data-type and limitations), and it's behavior (for both valid and invalid use). Feel free to write any additional information in your README.md.
 
-# bitmapper:
+## Commands to run to convert images
+In the terminal run the following command to convert an image:
+```
+node index.js <input path> <output path> <transform name>
+```
+
+Examples:
+```
+node index.js __test__/assets/bitmap.bmp __test__/dump/bitmap-chaos.bmp chaos
+
+node index.js __test__/assets/bitmap.bmp __test__/dump/bitmap-invert.bmp invert
+
+node index.js __test__/assets/bitmap.bmp __test__/dump/bitmap-greyscale.bmp greyscale
+```
+
+
+## bitmapper:
 airity: 4, inputPaths(array), outputPaths(array), transformName(string), callback
 ## Contains:
 ## writer:
