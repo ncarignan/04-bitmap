@@ -1,53 +1,27 @@
 'use strict';
 
-const greyscale = require('./lib/greyscale.js');
-const invert = require('./lib/invert.js');
-const chaos = require('./lib/chaos.js');
-const bitmap = require('./lib/bitmap.js');
-const fs = require('fs');
-const bitmapper = module.exports = {};
+const readWrite = require('./lib/read-write');
 
+let cliArguments = process.argv.slice(2);
 
-let inputPaths = [];
-inputPaths.push(process.argv[2]);
-let outputPaths = [];
-outputPaths.push(process.argv[3]);
-let transformName = process.argv[4];
+let transform = null;
 
+if(cliArguments[1] === 'invert')
+  transform = 'invert';
+else {
+  console.error('must use invert or etc or etc');
+}
 
-bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
-  let results = [];
+let bmpPath = cliArguments[0];
+readWrite.readBMP(bmpPath, transform, (error,data) => {
+  console.log('ready to process bmp');
+  if(error)
+    console.error(error);
 
-  if(typeof callback !== 'function') {
-    callback = (error, data) => {return;};
-  }
+  readWrite.writeBMP(`${transform}.bmp`, data, (error,data) => {
+    if(error)
+      console.error(error);
 
-  function parseFilesRecursively(){
-    if(inputPaths.length === 0){
-      eval(`${transformName}.${transformName}(results, outputPaths, callback)`);
-    }else
-      fs.readFile(inputPaths.shift(), (error,data) => {
-        if(error){
-          callback(error);
-          return;
-        }
-        results.push(bitmap.parseBitmap(data));
-        parseFilesRecursively();
-      });
-  }
-
-  if(typeof inputPaths !== 'object'){
-    callback('inputPaths must be an array of strings', inputPaths);
-    throw new TypeError('inputPaths must be an array of strings');
-  }else if(typeof outputPaths !== 'object'){
-    callback('outputPaths must be an array of strings', outputPaths);
-    throw new TypeError('outputPaths must be an array of strings');
-  }else if(typeof transformName !== 'string'){
-    callback('transformName must be a string', transformName);
-    throw new TypeError('transformName must be a string');
-  }else{
-    parseFilesRecursively();
-  }
-};
-
-bitmapper.writer(inputPaths, outputPaths, transformName);
+    console.log('transformation completed');
+  });
+});
