@@ -49,5 +49,3 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
     parseFilesRecursively();
   }
 };
-
-// bitmapper.writer(inputPaths, outputPaths, transformName);
