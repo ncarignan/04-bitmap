@@ -50,4 +50,4 @@ bitmapper.writer = (inputPaths, outputPaths, transformName, callback) =>{
   }
 };
 
-bitmapper.writer(inputPaths, outputPaths, transformName);
+// bitmapper.writer(inputPaths, outputPaths, transformName);
